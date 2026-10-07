@@ -89,12 +89,19 @@ input[readonly]{
     background:#f1f5f9;
 }
 
-button{
-    border:none;
-    border-radius:8px;
-    padding:11px 15px;
-    cursor:pointer;
+.flavor-box{
+    background:#f0fdfa;
+    border:1px solid #99f6e4;
+    padding:15px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+.flavor-title{
     font-weight:bold;
+    color:#0f766e;
+    margin-bottom:12px;
+    font-size:16px;
 }
 
 .btn-save{
@@ -103,10 +110,10 @@ button{
     background:#0f766e;
     color:white;
     font-size:16px;
-}
-
-.btn-save:hover{
-    background:#115e59;
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
 }
 
 .week-buttons{
@@ -118,6 +125,10 @@ button{
 .week-btn{
     background:#e2e8f0;
     color:#334155;
+    border:none;
+    padding:11px;
+    border-radius:8px;
+    font-weight:bold;
 }
 
 .week-btn.active{
@@ -179,7 +190,7 @@ button{
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:900px;
+    min-width:1100px;
 }
 
 th,td{
@@ -198,6 +209,8 @@ th{
     background:#dc2626;
     color:white;
     padding:7px 10px;
+    border:none;
+    border-radius:6px;
 }
 
 .progress-container{
@@ -231,7 +244,6 @@ footer{
     text-align:center;
     background:#1e293b;
     color:white;
-    border-radius:15px 15px 0 0;
 }
 
 footer h3{
@@ -267,10 +279,6 @@ footer strong{
     .week-buttons{
         grid-template-columns:repeat(2,1fr);
     }
-
-    header h1{
-        font-size:21px;
-    }
 }
 </style>
 </head>
@@ -278,16 +286,17 @@ footer strong{
 <body>
 
 <header>
-    <h1>📊 MONITORING WASTE CUP</h1>
-    <p>Monitoring Pemborosan Cup Produksi</p>
+<h1>📊 MONITORING WASTE CUP</h1>
+<p>Monitoring Pemborosan Cup Produksi</p>
 </header>
 
 <div class="container">
 
 <!-- INPUT DATA -->
+
 <div class="card">
 
-<h2>📝 Input Data Harian</h2>
+<h2>📝 Input Data Produksi</h2>
 
 <div class="form-grid">
 
@@ -312,36 +321,145 @@ footer strong{
 </div>
 
 <div class="form-group">
+<label>Jumlah Flavor Hari Ini</label>
+<select id="jumlahFlavor" onchange="aturFlavor()">
+<option value="1">1 Flavor</option>
+<option value="2">2 Flavor</option>
+<option value="3">3 Flavor</option>
+</select>
+</div>
+
+</div>
+
+
+<!-- FLAVOR -->
+
+<div class="flavor-box">
+
+<div class="flavor-title">
+🍜 Nama Flavor yang Diproduksi
+</div>
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Nama Flavor 1</label>
+
+<input
+type="text"
+id="flavor1"
+placeholder="Tulis nama flavor 1">
+
+</div>
+
+
+<div class="form-group" id="boxFlavor2">
+
+<label>Nama Flavor 2</label>
+
+<input
+type="text"
+id="flavor2"
+placeholder="Tulis nama flavor 2">
+
+</div>
+
+
+<div class="form-group" id="boxFlavor3">
+
+<label>Nama Flavor 3</label>
+
+<input
+type="text"
+id="flavor3"
+placeholder="Tulis nama flavor 3">
+
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
 <label>Suplaian</label>
-<input type="number" id="suplaian" placeholder="Masukkan suplaian">
+
+<input
+type="number"
+id="suplaian"
+placeholder="Masukkan total suplaian">
+
 </div>
 
+
 <div class="form-group">
+
 <label>Reversal</label>
-<input type="number" id="reversal" placeholder="Masukkan reversal">
+
+<input
+type="number"
+id="reversal"
+placeholder="Masukkan reversal">
+
 </div>
 
+
 <div class="form-group">
+
 <label>Pemakaian</label>
-<input type="number" id="pemakaian" readonly>
+
+<input
+type="number"
+id="pemakaian"
+readonly>
+
 </div>
 
+
 <div class="form-group">
+
 <label>Finish Good (FG)</label>
-<input type="number" id="fg" placeholder="Masukkan FG">
+
+<input
+type="number"
+id="fg"
+placeholder="Masukkan FG">
+
 </div>
 
-<div class="form-group">
-<label>Pemborosan / Waste</label>
-<input type="number" id="waste" readonly>
-</div>
 
 <div class="form-group">
+
+<label>Waste Aktual</label>
+
+<input
+type="number"
+id="waste"
+readonly>
+
+</div>
+
+
+<div class="form-group">
+
 <label>Waste %</label>
-<input type="text" id="persen" readonly>
+
+<input
+type="text"
+id="persen"
+readonly>
+
 </div>
 
 </div>
+
 
 <button class="btn-save" onclick="simpanData()">
 💾 SIMPAN DATA
@@ -350,33 +468,41 @@ footer strong{
 </div>
 
 
-<!-- PILIH WEEK -->
+<!-- WEEK -->
+
 <div class="card">
 
 <h2>📅 Pilih Minggu</h2>
 
 <div class="week-buttons">
 
-<button class="week-btn active" id="btnWeek1" onclick="pilihWeek(1)">
+<button class="week-btn active"
+id="btnWeek1"
+onclick="pilihWeek(1)">
 WEEK 1
 </button>
 
-<button class="week-btn" id="btnWeek2" onclick="pilihWeek(2)">
+<button class="week-btn"
+id="btnWeek2"
+onclick="pilihWeek(2)">
 WEEK 2
 </button>
 
-<button class="week-btn" id="btnWeek3" onclick="pilihWeek(3)">
+<button class="week-btn"
+id="btnWeek3"
+onclick="pilihWeek(3)">
 WEEK 3
 </button>
 
-<button class="week-btn" id="btnWeek4" onclick="pilihWeek(4)">
+<button class="week-btn"
+id="btnWeek4"
+onclick="pilihWeek(4)">
 WEEK 4
 </button>
 
 </div>
 
 
-<!-- RINGKASAN MINGGU -->
 <div class="summary">
 
 <div class="summary-box">
@@ -443,11 +569,12 @@ BELUM ADA DATA
 </div>
 
 
-<!-- DATA HARIAN -->
+<!-- TABEL -->
+
 <div class="card">
 
 <h2 id="judulData">
-📋 Data Harian Week 1
+📋 Data Week 1
 </h2>
 
 <div class="table-container">
@@ -460,6 +587,7 @@ BELUM ADA DATA
 <th>No</th>
 <th>Tanggal</th>
 <th>Hari</th>
+<th>Flavor</th>
 <th>Suplaian</th>
 <th>Reversal</th>
 <th>Pemakaian</th>
@@ -481,6 +609,7 @@ BELUM ADA DATA
 
 
 <!-- GRAFIK -->
+
 <div class="card">
 
 <h2>
@@ -496,6 +625,7 @@ BELUM ADA DATA
 
 
 <!-- FOOTER -->
+
 <footer>
 
 <h3>📊 Monitoring Waste Cup</h3>
@@ -521,34 +651,55 @@ let selectedWeek = 1;
 let wasteChart = null;
 
 
-// ===============================
+// ==============================
+// ATUR JUMLAH FLAVOR
+// ==============================
+
+function aturFlavor(){
+
+let jumlah =
+Number(document.getElementById("jumlahFlavor").value);
+
+document.getElementById("boxFlavor2").style.display =
+jumlah >= 2 ? "flex" : "none";
+
+document.getElementById("boxFlavor3").style.display =
+jumlah >= 3 ? "flex" : "none";
+
+}
+
+aturFlavor();
+
+
+// ==============================
 // AUTO HARI
-// ===============================
+// ==============================
 
 document.getElementById("tanggal")
 .addEventListener("change",function(){
 
-    let tanggal = new Date(this.value);
+let tanggal =
+new Date(this.value);
 
-    let hari = [
-        "Minggu",
-        "Senin",
-        "Selasa",
-        "Rabu",
-        "Kamis",
-        "Jumat",
-        "Sabtu"
-    ];
+let hari = [
+"Minggu",
+"Senin",
+"Selasa",
+"Rabu",
+"Kamis",
+"Jumat",
+"Sabtu"
+];
 
-    document.getElementById("hari").value =
-    hari[tanggal.getDay()];
+document.getElementById("hari").value =
+hari[tanggal.getDay()];
 
 });
 
 
-// ===============================
+// ==============================
 // HITUNG OTOMATIS
-// ===============================
+// ==============================
 
 document.getElementById("suplaian")
 .addEventListener("input",hitungPreview);
@@ -562,556 +713,559 @@ document.getElementById("fg")
 
 function hitungPreview(){
 
-    let suplaian =
-    Number(document.getElementById("suplaian").value) || 0;
+let suplaian =
+Number(document.getElementById("suplaian").value) || 0;
 
-    let reversal =
-    Number(document.getElementById("reversal").value) || 0;
+let reversal =
+Number(document.getElementById("reversal").value) || 0;
 
-    let fg =
-    Number(document.getElementById("fg").value) || 0;
+let fg =
+Number(document.getElementById("fg").value) || 0;
 
-    let pemakaian =
-    suplaian - reversal;
+let pemakaian =
+suplaian - reversal;
 
-    let waste =
-    pemakaian - fg;
+let waste =
+pemakaian - fg;
 
-    let persen = 0;
+let persen =
+pemakaian > 0
+? (waste / pemakaian) * 100
+: 0;
 
-    if(pemakaian > 0){
+document.getElementById("pemakaian").value =
+pemakaian >= 0 ? pemakaian : 0;
 
-        persen =
-        (waste / pemakaian) * 100;
+document.getElementById("waste").value =
+waste;
 
-    }
-
-    document.getElementById("pemakaian").value =
-    pemakaian >= 0 ? pemakaian : 0;
-
-    document.getElementById("waste").value =
-    waste;
-
-    document.getElementById("persen").value =
-    persen.toFixed(3) + "%";
+document.getElementById("persen").value =
+persen.toFixed(3) + "%";
 
 }
 
 
-// ===============================
+// ==============================
 // SIMPAN DATA
-// ===============================
+// ==============================
 
 function simpanData(){
 
-    let tanggal =
-    document.getElementById("tanggal").value;
+let tanggal =
+document.getElementById("tanggal").value;
 
-    let hari =
-    document.getElementById("hari").value;
+let hari =
+document.getElementById("hari").value;
 
-    let minggu =
-    Number(document.getElementById("minggu").value);
+let minggu =
+Number(document.getElementById("minggu").value);
 
-    let suplaian =
-    Number(document.getElementById("suplaian").value);
-
-    let reversal =
-    Number(document.getElementById("reversal").value);
-
-    let fg =
-    Number(document.getElementById("fg").value);
+let jumlahFlavor =
+Number(document.getElementById("jumlahFlavor").value);
 
 
-    if(!tanggal){
+let flavor1 =
+document.getElementById("flavor1").value.trim();
 
-        alert("Tanggal belum diisi!");
+let flavor2 =
+document.getElementById("flavor2").value.trim();
 
-        return;
-    }
-
-
-    if(suplaian <= 0){
-
-        alert("Suplaian harus diisi!");
-
-        return;
-    }
+let flavor3 =
+document.getElementById("flavor3").value.trim();
 
 
-    if(reversal > suplaian){
+let suplaian =
+Number(document.getElementById("suplaian").value);
 
-        alert("Reversal tidak boleh lebih besar dari suplaian!");
+let reversal =
+Number(document.getElementById("reversal").value);
 
-        return;
-    }
-
-
-    let pemakaian =
-    suplaian - reversal;
-
-    let waste =
-    pemakaian - fg;
-
-    let persen =
-    pemakaian > 0
-    ? (waste / pemakaian) * 100
-    : 0;
+let fg =
+Number(document.getElementById("fg").value);
 
 
-    let record = {
+if(!tanggal){
+alert("Tanggal belum diisi!");
+return;
+}
 
-        id:Date.now(),
+if(!flavor1){
+alert("Nama Flavor 1 belum diisi!");
+return;
+}
 
-        tanggal:tanggal,
+if(jumlahFlavor >= 2 && !flavor2){
+alert("Nama Flavor 2 belum diisi!");
+return;
+}
 
-        hari:hari,
+if(jumlahFlavor >= 3 && !flavor3){
+alert("Nama Flavor 3 belum diisi!");
+return;
+}
 
-        minggu:minggu,
+if(suplaian <= 0){
+alert("Suplaian harus diisi!");
+return;
+}
 
-        suplaian:suplaian,
-
-        reversal:reversal,
-
-        pemakaian:pemakaian,
-
-        fg:fg,
-
-        waste:waste,
-
-        persen:persen
-
-    };
-
-
-    data.push(record);
-
-    localStorage.setItem(
-        "dataWasteCup",
-        JSON.stringify(data)
-    );
+if(reversal > suplaian){
+alert("Reversal tidak boleh lebih besar dari suplaian!");
+return;
+}
 
 
-    alert("✅ Data berhasil disimpan!");
+let pemakaian =
+suplaian - reversal;
 
-    document.getElementById("tanggal").value="";
-    document.getElementById("hari").value="";
-    document.getElementById("suplaian").value="";
-    document.getElementById("reversal").value="";
-    document.getElementById("pemakaian").value="";
-    document.getElementById("fg").value="";
-    document.getElementById("waste").value="";
-    document.getElementById("persen").value="";
+let waste =
+pemakaian - fg;
+
+let persen =
+pemakaian > 0
+? (waste / pemakaian) * 100
+: 0;
 
 
-    pilihWeek(minggu);
+let flavors = [flavor1];
+
+if(jumlahFlavor >= 2)
+flavors.push(flavor2);
+
+if(jumlahFlavor >= 3)
+flavors.push(flavor3);
+
+
+let record = {
+
+id:Date.now(),
+
+tanggal:tanggal,
+
+hari:hari,
+
+minggu:minggu,
+
+jumlahFlavor:jumlahFlavor,
+
+flavors:flavors,
+
+suplaian:suplaian,
+
+reversal:reversal,
+
+pemakaian:pemakaian,
+
+fg:fg,
+
+waste:waste,
+
+persen:persen
+
+};
+
+
+data.push(record);
+
+
+localStorage.setItem(
+"dataWasteCup",
+JSON.stringify(data)
+);
+
+
+alert(
+"✅ Data berhasil disimpan!\n" +
+"Flavor: " +
+flavors.join(" + ")
+);
+
+
+// RESET
+
+document.getElementById("tanggal").value="";
+document.getElementById("hari").value="";
+
+document.getElementById("flavor1").value="";
+document.getElementById("flavor2").value="";
+document.getElementById("flavor3").value="";
+
+document.getElementById("suplaian").value="";
+document.getElementById("reversal").value="";
+document.getElementById("pemakaian").value="";
+document.getElementById("fg").value="";
+document.getElementById("waste").value="";
+document.getElementById("persen").value="";
+
+
+pilihWeek(minggu);
 
 }
 
 
-// ===============================
+// ==============================
 // PILIH WEEK
-// ===============================
+// ==============================
 
 function pilihWeek(week){
 
-    selectedWeek = week;
+selectedWeek = week;
 
+for(let i=1;i<=4;i++){
 
-    for(let i=1;i<=4;i++){
+document
+.getElementById("btnWeek"+i)
+.classList.remove("active");
 
-        document
-        .getElementById("btnWeek"+i)
-        .classList.remove("active");
+}
 
-    }
+document
+.getElementById("btnWeek"+week)
+.classList.add("active");
 
-
-    document
-    .getElementById("btnWeek"+week)
-    .classList.add("active");
-
-
-    tampilkanWeek();
+tampilkanWeek();
 
 }
 
 
-// ===============================
+// ==============================
 // TAMPILKAN WEEK
-// ===============================
+// ==============================
 
 function tampilkanWeek(){
 
-    let weekData =
-    data.filter(item =>
-    item.minggu === selectedWeek
-    );
+let weekData =
+data.filter(item =>
+item.minggu === selectedWeek
+);
 
 
-    let totalSuplaian = 0;
-    let totalReversal = 0;
-    let totalPemakaian = 0;
-    let totalFG = 0;
-    let totalWaste = 0;
+let totalSuplaian = 0;
+let totalReversal = 0;
+let totalPemakaian = 0;
+let totalFG = 0;
+let totalWaste = 0;
 
 
-    weekData.forEach(item => {
+weekData.forEach(item=>{
 
-        totalSuplaian += item.suplaian;
+totalSuplaian += item.suplaian;
+totalReversal += item.reversal;
+totalPemakaian += item.pemakaian;
+totalFG += item.fg;
+totalWaste += item.waste;
 
-        totalReversal += item.reversal;
+});
 
-        totalPemakaian += item.pemakaian;
 
-        totalFG += item.fg;
+let persen =
+totalPemakaian > 0
+? (totalWaste / totalPemakaian) * 100
+: 0;
 
-        totalWaste += item.waste;
 
-    });
+let jatah =
+totalPemakaian * 0.003;
 
+let sisa =
+jatah - totalWaste;
 
-    let persen =
-    totalPemakaian > 0
-    ? (totalWaste / totalPemakaian) * 100
-    : 0;
 
+document.getElementById("weekSuplaian")
+.textContent =
+totalSuplaian.toLocaleString("id-ID");
 
-    // Jatah maksimal 0.3%
+document.getElementById("weekReversal")
+.textContent =
+totalReversal.toLocaleString("id-ID");
 
-    let jatah =
-    totalPemakaian * 0.003;
+document.getElementById("weekPemakaian")
+.textContent =
+totalPemakaian.toLocaleString("id-ID");
 
+document.getElementById("weekFG")
+.textContent =
+totalFG.toLocaleString("id-ID");
 
-    let sisa =
-    jatah - totalWaste;
+document.getElementById("weekWaste")
+.textContent =
+totalWaste.toLocaleString("id-ID");
 
+document.getElementById("weekPersen")
+.textContent =
+persen.toFixed(3) + "%";
 
-    document.getElementById("weekSuplaian")
-    .textContent =
-    totalSuplaian.toLocaleString("id-ID");
+document.getElementById("weekJatah")
+.textContent =
+Math.floor(jatah).toLocaleString("id-ID");
 
+document.getElementById("weekSisa")
+.textContent =
+Math.floor(sisa).toLocaleString("id-ID");
 
-    document.getElementById("weekReversal")
-    .textContent =
-    totalReversal.toLocaleString("id-ID");
 
+// STATUS
 
-    document.getElementById("weekPemakaian")
-    .textContent =
-    totalPemakaian.toLocaleString("id-ID");
+let status =
+document.getElementById("weekStatus");
 
+status.className="status";
 
-    document.getElementById("weekFG")
-    .textContent =
-    totalFG.toLocaleString("id-ID");
 
+if(totalPemakaian === 0){
 
-    document.getElementById("weekWaste")
-    .textContent =
-    totalWaste.toLocaleString("id-ID");
+status.textContent =
+"BELUM ADA DATA";
 
+status.classList.add("safe");
 
-    document.getElementById("weekPersen")
-    .textContent =
-    persen.toFixed(3) + "%";
+}
+else if(persen > 0.3){
 
+status.textContent =
+"⚠️ MELEBIHI BATAS 0,3%";
 
-    document.getElementById("weekJatah")
-    .textContent =
-    Math.floor(jatah).toLocaleString("id-ID");
+status.classList.add("danger");
 
+}
+else if(persen >= 0.25){
 
-    document.getElementById("weekSisa")
-    .textContent =
-    Math.floor(sisa).toLocaleString("id-ID");
+status.textContent =
+"⚠️ MENDEKATI BATAS 0,3%";
 
+status.classList.add("warning");
 
-    // STATUS
+}
+else{
 
-    let status =
-    document.getElementById("weekStatus");
+status.textContent =
+"✅ AMAN - DI BAWAH 0,3%";
 
-    status.className = "status";
-
-
-    if(totalPemakaian === 0){
-
-        status.textContent =
-        "BELUM ADA DATA";
-
-        status.classList.add("safe");
-
-    }
-
-    else if(persen > 0.3){
-
-        status.textContent =
-        "⚠️ MELEBIHI BATAS 0,3%";
-
-        status.classList.add("danger");
-
-    }
-
-    else if(persen >= 0.25){
-
-        status.textContent =
-        "⚠️ MENDEKATI BATAS 0,3%";
-
-        status.classList.add("warning");
-
-    }
-
-    else{
-
-        status.textContent =
-        "✅ AMAN - DI BAWAH 0,3%";
-
-        status.classList.add("safe");
-
-    }
-
-
-    // PROGRESS JATAH
-
-    let progress = 0;
-
-    if(jatah > 0){
-
-        progress =
-        (totalWaste / jatah) * 100;
-
-    }
-
-
-    if(progress < 0){
-
-        progress = 0;
-
-    }
-
-
-    document.getElementById("progressBar")
-    .style.width =
-    Math.min(progress,100) + "%";
-
-
-    document.getElementById("progressText")
-    .textContent =
-    progress.toFixed(1) + "%";
-
-
-    document.getElementById("judulData")
-    .textContent =
-    "📋 Data Harian Week " + selectedWeek;
-
-
-    document.getElementById("chartWeek")
-    .textContent =
-    selectedWeek;
-
-
-    tampilkanDataWeek(weekData);
-
-    tampilkanGrafikWeek(weekData);
+status.classList.add("safe");
 
 }
 
 
-// ===============================
-// TABEL DATA
-// ===============================
+// PROGRESS
+
+let progress =
+jatah > 0
+? (totalWaste / jatah) * 100
+: 0;
+
+if(progress < 0)
+progress = 0;
+
+
+document.getElementById("progressBar")
+.style.width =
+Math.min(progress,100) + "%";
+
+document.getElementById("progressText")
+.textContent =
+progress.toFixed(1) + "%";
+
+
+document.getElementById("judulData")
+.textContent =
+"📋 Data Week " + selectedWeek;
+
+document.getElementById("chartWeek")
+.textContent =
+selectedWeek;
+
+
+tampilkanDataWeek(weekData);
+
+tampilkanGrafikWeek(weekData);
+
+}
+
+
+// ==============================
+// TABEL
+// ==============================
 
 function tampilkanDataWeek(weekData){
 
-    let tbody =
-    document.getElementById("tabelData");
+let tbody =
+document.getElementById("tabelData");
 
-    tbody.innerHTML = "";
-
-
-    weekData.sort(
-        (a,b) =>
-        new Date(a.tanggal) -
-        new Date(b.tanggal)
-    );
+tbody.innerHTML="";
 
 
-    if(weekData.length === 0){
-
-        tbody.innerHTML = `
-        <tr>
-        <td colspan="10">
-        Belum ada data untuk Week ${selectedWeek}
-        </td>
-        </tr>
-        `;
-
-        return;
-    }
+weekData.sort(
+(a,b)=>
+new Date(a.tanggal) -
+new Date(b.tanggal)
+);
 
 
-    weekData.forEach((item,index) => {
+if(weekData.length === 0){
 
-        let row = document.createElement("tr");
+tbody.innerHTML=`
 
+<tr>
+<td colspan="11">
+Belum ada data untuk Week ${selectedWeek}
+</td>
+</tr>
 
-        row.innerHTML = `
+`;
 
-        <td>${index+1}</td>
-
-        <td>${item.tanggal}</td>
-
-        <td>${item.hari}</td>
-
-        <td>
-        ${item.suplaian.toLocaleString("id-ID")}
-        </td>
-
-        <td>
-        ${item.reversal.toLocaleString("id-ID")}
-        </td>
-
-        <td>
-        ${item.pemakaian.toLocaleString("id-ID")}
-        </td>
-
-        <td>
-        ${item.fg.toLocaleString("id-ID")}
-        </td>
-
-        <td>
-        ${item.waste.toLocaleString("id-ID")}
-        </td>
-
-        <td>
-        ${item.persen.toFixed(3)}%
-        </td>
-
-        <td>
-
-        <button
-        class="delete-btn"
-        onclick="hapusData(${item.id})">
-
-        Hapus
-
-        </button>
-
-        </td>
-
-        `;
+return;
+}
 
 
-        tbody.appendChild(row);
+weekData.forEach((item,index)=>{
 
-    });
+let row =
+document.createElement("tr");
+
+
+let flavorText =
+item.flavors
+? item.flavors.join(" + ")
+: "-";
+
+
+row.innerHTML=`
+
+<td>${index+1}</td>
+
+<td>${item.tanggal}</td>
+
+<td>${item.hari}</td>
+
+<td>
+<strong>${flavorText}</strong>
+</td>
+
+<td>${item.suplaian.toLocaleString("id-ID")}</td>
+
+<td>${item.reversal.toLocaleString("id-ID")}</td>
+
+<td>${item.pemakaian.toLocaleString("id-ID")}</td>
+
+<td>${item.fg.toLocaleString("id-ID")}</td>
+
+<td>${item.waste.toLocaleString("id-ID")}</td>
+
+<td>${item.persen.toFixed(3)}%</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="hapusData(${item.id})">
+
+Hapus
+
+</button>
+
+</td>
+
+`;
+
+tbody.appendChild(row);
+
+});
 
 }
 
 
-// ===============================
-// HAPUS DATA
-// ===============================
+// ==============================
+// HAPUS
+// ==============================
 
 function hapusData(id){
 
-    if(!confirm("Yakin ingin menghapus data ini?")){
+if(!confirm("Yakin ingin menghapus data ini?"))
+return;
 
-        return;
+data =
+data.filter(item =>
+item.id !== id
+);
 
-    }
+localStorage.setItem(
+"dataWasteCup",
+JSON.stringify(data)
+);
 
-
-    data =
-    data.filter(item =>
-    item.id !== id
-    );
-
-
-    localStorage.setItem(
-        "dataWasteCup",
-        JSON.stringify(data)
-    );
-
-
-    tampilkanWeek();
+tampilkanWeek();
 
 }
 
 
-// ===============================
+// ==============================
 // GRAFIK
-// ===============================
+// ==============================
 
 function tampilkanGrafikWeek(weekData){
 
-    let canvas =
-    document.getElementById("wasteChart");
+let canvas =
+document.getElementById("wasteChart");
 
 
-    if(wasteChart){
-
-        wasteChart.destroy();
-
-    }
+if(wasteChart){
+wasteChart.destroy();
+}
 
 
-    let labels =
-    weekData.map(item =>
-    item.hari + " " + item.tanggal
-    );
+let labels =
+weekData.map(item =>
+item.tanggal
+);
 
 
-    let waste =
-    weekData.map(item =>
-    item.waste
-    );
+let waste =
+weekData.map(item =>
+item.waste
+);
 
 
-    wasteChart =
-    new Chart(canvas,{
+wasteChart =
+new Chart(canvas,{
 
-        type:"bar",
+type:"bar",
 
-        data:{
+data:{
 
-            labels:labels,
+labels:labels,
 
-            datasets:[{
+datasets:[{
 
-                label:"Waste Cup (pcs)",
+label:"Waste Cup (pcs)",
 
-                data:waste
+data:waste
 
-            }]
+}]
 
-        },
+},
 
-        options:{
+options:{
 
-            responsive:true,
+responsive:true,
 
-            scales:{
+scales:{
 
-                y:{
+y:{
+beginAtZero:true
+}
 
-                    beginAtZero:true
+}
 
-                }
+}
 
-            }
-
-        }
-
-    });
+});
 
 }
 
 
-// ===============================
-// TAMPILKAN AWAL
-// ===============================
+// ==============================
+// MULAI
+// ==============================
 
 pilihWeek(1);
 
@@ -1119,3 +1273,4 @@ pilihWeek(1);
 
 </body>
 </html>
+
